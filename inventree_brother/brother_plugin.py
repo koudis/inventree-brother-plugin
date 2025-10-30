@@ -39,16 +39,16 @@ class BrotherLabelPlugin(MachineDriverMixin, InvenTreePlugin):
     """Brother label printer driver plugin for InvenTree."""
 
     AUTHOR = "Oliver Walters"
-    DESCRIPTION = "Label printing plugin for Brother printers"
+    DESCRIPTION = "Label printing plugin for Brother printers for continous print"
     VERSION = BROTHER_PLUGIN_VERSION
 
     # Machine registry was added in InvenTree 0.14.0, use inventree-brother-plugin 0.9.0 for older versions
     # Machine driver interface was fixed with 0.16.0 to work inside of inventree workers
     MIN_VERSION = "0.16.0"
 
-    NAME = "Brother Labels"
+    NAME = "Brother Labels Continous"
     SLUG = "brother"
-    TITLE = "Brother Label Printer"
+    TITLE = "Brother Label Printer for Continous Printing"
 
     # Use background printing
     BLOCKING_PRINT = False
@@ -62,8 +62,8 @@ class BrotherLabelPrinterDriver(LabelPrinterBaseDriver):
     """Brother label printing driver for InvenTree."""
 
     SLUG = "brother"
-    NAME = "Brother Label Printer Driver"
-    DESCRIPTION = "Brother label printing driver for InvenTree"
+    NAME = "Brother Label Continous Printer Driver"
+    DESCRIPTION = "Brother label continous printing driver for InvenTree"
 
     def __init__(self, *args, **kwargs):
         """Initialize the BrotherLabelPrinterDriver."""
@@ -228,7 +228,7 @@ class BrotherLabelPrinterDriver(LabelPrinterBaseDriver):
         # Generate instructions for printing
         params = {
             "qlr": printer,
-            "images": [printable_image],
+            "images": [printable_image] * n_copies,
             "label": media_type,
             "cut": machine.get_setting("AUTO_CUT", "D"),
             "rotate": 0,
@@ -254,10 +254,9 @@ class BrotherLabelPrinterDriver(LabelPrinterBaseDriver):
             # Raise error when no backend is defined
             raise ValueError("No IP address or USB device defined.")
 
-        for _i in range(n_copies):
-            send(
-                instructions=instructions,
-                printer_identifier=printer_id,
-                backend_identifier=backend_id,
-                blocking=True,
-            )
+        send(
+            instructions=instructions,
+            printer_identifier=printer_id,
+            backend_identifier=backend_id,
+            blocking=True,
+        )

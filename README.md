@@ -1,6 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![PEP](https://github.com/inventree/inventree-python/actions/workflows/pep.yaml/badge.svg)
 
+**Fork of official InvenTree plugin to support continous print labeling with Brother label printers**
 
 # inventree-brother-plugin
 
@@ -20,13 +21,13 @@ This plugin supports printing to *some* Brother label printers with network (wir
 Install this plugin manually as follows:
 
 ```
-pip install inventree-brother-plugin
+pip install inventree-brother-plugin@git+https://github.com/koudis/inventree-brother-plugin.git
 ```
 
 Or, add to your `plugins.txt` file to install automatically using the `invoke install` command:
 
 ```
-inventree-brother-plugin
+inventree-brother-plugin@git+https://github.com/koudis/inventree-brother-plugin.git
 ```
 
 Now open your InvenTree's "Admin Center > Plugins" page to activate the plugin. Next, read below for instructions on setting up a printer via "Admin Center > Machines".
